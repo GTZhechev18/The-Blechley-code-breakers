@@ -64,12 +64,13 @@ int EnterNumber(bool diff)
 
     return n;
 }
-void CheckGuess(int Coords, int Guess)
+void CheckGuess(int Coords, int Guess, int &Reds, int&Greens)
 {
     int CoordsDigs[4], GuessDigs[4];
     Digits(Coords, CoordsDigs);
     Digits(Guess, GuessDigs);
-    int Greens=0, Reds = 0;
+    Greens = 0;
+    Reds = 0;
 
     for (int i = 0; i < 4; i++)
         if (CoordsDigs[i] == GuessDigs[i]) Greens++;
@@ -77,15 +78,57 @@ void CheckGuess(int Coords, int Guess)
     for (int i = 0; i < 4; i++)
         for (int j = 0; j < 4; j++)
             if (CoordsDigs[i] == GuessDigs[j] and i != j) Reds++;
-    cout << "Red=" << Reds << "\nGreen=" << Greens;
+  //  cout << "Red=" << Reds << "\nGreen=" << Greens;
+}
+
+void Level1()
+{
+    int number1;
+    cout << "Player 1, enter your combination! ";
+    number1 = EnterNumber(true);
+
+    int GuessNum = 0;
+    bool Guessed = false;
+    int Reds, Greens;
+    while (GuessNum < 13 and Guessed == false)
+    {
+        GuessNum++;
+        int number2;
+        cout << "Guess number "<< GuessNum<<"!\nPlayer 2 enter your guess:";
+        number2 = EnterNumber(true);
+        CheckGuess(number1, number2, Reds, Greens);
+        cout << "Red=" << Reds << "\nGreen=" << Greens<<endl;
+        if (Greens == 4) {
+                         cout << "Congratulations! You have broken the code!";
+                         Guessed = true;
+                        }
+    }
+    if (Guessed == false) cout << "Sorry! You failed trying to break the code!";
+}
+
+void MainMenu()
+{
+    cout << "Welcome to Bletchley";
+    cout << "Please select level of difficulty (1 or 2):";
+    int level;
+    cin >> level;
+    while (level != 1 and level != 2)
+    {
+        cout << "Invalid input!\n";
+        cout << "Please select level of difficulty (1 or 2):";
+        cin >> level;
+    }
+    if (level == 1) Level1();
+   // else Level2();
 }
 
 int main()
 {
-    int a = EnterNumber(true);
+    MainMenu();
+   /* int a = EnterNumber(true);
     cout << a;
     int b = EnterNumber(true);
-    CheckGuess(a, b);
+    CheckGuess(a, b);*/
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
