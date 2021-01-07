@@ -2,6 +2,8 @@
 #include <vector>
 #include <conio.h>
 #include <time.h>
+//#include <winnt.h>
+#include <windows.h>
 
 using namespace std;
 
@@ -17,6 +19,7 @@ void Digits(int n, int digs[4])
         br--;
     }
 }
+
 int GenerateNumber()
 {
     srand(time(NULL));
@@ -62,6 +65,7 @@ int ReadNumber()
     }
     return n;
 }
+
 int EnterNumber(bool diff)
 {
     int n;
@@ -97,6 +101,7 @@ int EnterNumber(bool diff)
 
     return n;
 }
+
 void CheckGuess(int Coords, int Guess, int &Reds, int&Greens)
 {
     int CoordsDigs[4], GuessDigs[4];
@@ -111,24 +116,32 @@ void CheckGuess(int Coords, int Guess, int &Reds, int&Greens)
     for (int i = 0; i < 4; i++)
         for (int j = 0; j < 4; j++)
             if (CoordsDigs[i] == GuessDigs[j] and i != j) Reds++;
-  //  call GuessResult(Reds,Greens) ;
-  //  cout << "Red=" << Reds << "\nGreen=" << Greens;
 }
+
 void ShowHistory(int Coords)
 {
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     for (unsigned int i = 0; i < history.size(); i++)
     {
         int R, G;
         CheckGuess(Coords, history[i], R, G);
-        cout << "Guess " << i + 1 <<" : "<<history[i]<< " Reds=" << R << " Greens=" << G << endl;
+        cout << "Guess " << i + 1 << " : " << history[i];
+        
+        SetConsoleTextAttribute(hConsole, 4);
+        cout << " Reds=" << R;
+        SetConsoleTextAttribute(hConsole, 2);
+        cout << " Greens=" << G << endl;
+        SetConsoleTextAttribute(hConsole, 15);
     }
 
 }
+
 void Level1()
 {
     int number1;
     cout << "Player 1, enter your combination! ";
     number1 = EnterNumber(true);
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
     int GuessNum = 0;
     bool Guessed = false;
@@ -149,13 +162,19 @@ void Level1()
             cout << "Ready for the next guess? Press any key to continue! ";
             _getch();
         }
-        if (Greens == 4) {
-                         cout << "Congratulations! You have broken the code!";
-                         Guessed = true;
+        if (Greens == 4) { SetConsoleTextAttribute(hConsole, 2);
+                           cout << "Congratulations! You have broken the code!";
+                           Guessed = true;
+                           SetConsoleTextAttribute(hConsole, 15);
                         }
     }
-    if (Guessed == false) cout << "Sorry! You failed trying to break the code! The code is " << number1 << endl;
+    if (Guessed == false) {
+        SetConsoleTextAttribute(hConsole, 4);
+        cout << "Sorry! You failed trying to break the code! The code is " << number1 << endl;
+        SetConsoleTextAttribute(hConsole, 15);
+    }
 }
+
 void Level2()
 {
     int number1 = GenerateNumber();
@@ -205,12 +224,8 @@ void MainMenu()
     if (level == 1) Level1();
       else Level2();
 }
+
 int main()
 {
-  //  cout << GenerateNumber();
-    MainMenu();
-   /* int a = EnterNumber(true);
-    cout << a;
-    int b = EnterNumber(true);
-    CheckGuess(a, b);*/
+   MainMenu();
 }
