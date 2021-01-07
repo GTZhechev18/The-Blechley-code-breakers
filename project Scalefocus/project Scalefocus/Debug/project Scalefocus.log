@@ -1,3 +1,3 @@
 ﻿  project Scalefocus.cpp
-C:\Users\ADMIN\Documents\scale\project Scalefocus\project Scalefocus\project Scalefocus.cpp(27,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\ADMIN\Documents\scale\project Scalefocus\project Scalefocus\project Scalefocus.cpp(24,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   project Scalefocus.vcxproj -> C:\Users\ADMIN\Documents\scale\project Scalefocus\Debug\project Scalefocus.exe
